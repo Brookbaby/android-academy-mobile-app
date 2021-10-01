@@ -3,8 +3,12 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Alina/AndroidStudioProjects/android-academy-mobile-app/app/src/main/res/drawable/hh.xml" value="0.18854166666666666" />
         <entry key="..\:/Users/Alina/AndroidStudioProjects/android-academy-mobile-app/app/src/main/res/layout/activity_registration.xml" value="0.1" />
         <entry key="..\:/Users/Alina/AndroidStudioProjects/android-academy-mobile-app/app/src/main/res/layout/content_registration.xml" value="0.1" />
+        <entry key="..\:/Users/Alina/AndroidStudioProjects/android-academy-mobile-app/app/src/main/res/layout/fragment_first.xml" value="0.176" />
+        <entry key="..\:/Users/Alina/AndroidStudioProjects/android-academy-mobile-app/app/src/main/res/layout/fragment_login.xml" value="0.176" />
+        <entry key="..\:/Users/Alina/AndroidStudioProjects/android-academy-mobile-app/app/src/main/res/layout/fragment_registration.xml" value="0.264" />
       </map>
     </option>
   </component>
