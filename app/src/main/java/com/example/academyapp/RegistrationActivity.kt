@@ -4,19 +4,26 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import com.example.academyapp.databinding.ActivityRegistrationBinding
+import com.example.academyapp.local.DataBase
+import com.example.academyapp.local.UserDao
 
 class RegistrationActivity : AppCompatActivity() {
 
+    lateinit var userDao: UserDao
     private lateinit var binding: ActivityRegistrationBinding
     var fragmentId = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityRegistrationBinding.inflate(layoutInflater)
-
-        navigation()
-
         setContentView(binding.root)
+        initDao()
+        navigation()
+    }
+
+    private fun initDao() {
+        val dataBase = DataBase.getDataBase(this)
+        userDao = dataBase.userDao()
     }
 
     private fun navigation() {
