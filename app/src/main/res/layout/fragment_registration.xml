@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LoginFragment">
+    tools:context=".ui.regisration.LoginFragment">
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/loginInputLayout"
@@ -13,20 +13,24 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
         android:layout_marginTop="16dp"
-        android:hint="Логин"
-        app:boxStrokeColor="@color/black"
+        android:hint="@string/login_hint"
+        app:boxStrokeColor="@color/nice_blue"
         app:errorEnabled="true"
         app:expandedHintEnabled="true"
-        app:hintTextColor="@color/black"
+        app:hintTextColor="@color/nice_blue"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:startIconDrawable="@drawable/ic_baseline_person_outline_24"
+        app:counterEnabled="true"
+        app:counterMaxLength="10">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/loginEditText"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:textSize="16dp" />
+            android:textSize="16dp"
+            android:maxLength="10"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -36,19 +40,23 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
         android:hint="E-mail"
-        app:boxStrokeColor="@color/black"
+        app:boxStrokeColor="@color/nice_blue"
         app:errorEnabled="true"
         app:expandedHintEnabled="true"
-        app:hintTextColor="@color/black"
+        app:hintTextColor="@color/nice_blue"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/loginInputLayout">
+        app:layout_constraintTop_toBottomOf="@+id/loginInputLayout"
+        app:startIconDrawable="@drawable/ic_baseline_email_24"
+        app:counterEnabled="true"
+        app:counterMaxLength="20">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/emailEditText"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:textSize="16dp" />
+            android:textSize="16dp"
+            android:maxLength="20"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -58,19 +66,25 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
         android:hint="Пароль"
-        app:boxStrokeColor="@color/black"
+        app:endIconMode="password_toggle"
+        app:boxStrokeColor="@color/nice_blue"
         app:errorEnabled="true"
         app:expandedHintEnabled="true"
-        app:hintTextColor="@color/black"
+        app:hintTextColor="@color/nice_blue"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/emailInputLayout">
+        app:layout_constraintTop_toBottomOf="@+id/emailInputLayout"
+        app:startIconDrawable="@drawable/ic_baseline_lock_24"
+        app:counterEnabled="true"
+        app:counterMaxLength="12">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/passwordEditText"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:textSize="16dp" />
+            android:textSize="16dp"
+            android:inputType="textPassword"
+            android:maxLength="12"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -80,10 +94,14 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
         android:hint="Повторить пароль"
-        app:boxStrokeColor="@color/black"
+        app:boxStrokeColor="@color/nice_blue"
+        app:startIconDrawable="@drawable/ic_baseline_lock_24"
         app:errorEnabled="true"
+        app:endIconMode="password_toggle"
+        app:counterEnabled="true"
+        app:counterMaxLength="12"
         app:expandedHintEnabled="true"
-        app:hintTextColor="@color/black"
+        app:hintTextColor="@color/nice_blue"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/passwordInputLayout">
@@ -92,7 +110,9 @@
             android:id="@+id/repeatPasswordEditText"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:textSize="16dp" />
+            android:textSize="16dp"
+            android:inputType="textPassword"
+            android:maxLength="12"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <androidx.appcompat.widget.SwitchCompat
