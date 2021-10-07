@@ -20,10 +20,10 @@ class LoginFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentLoginBinding.inflate(inflater, container, false)
-        var registrationActivity = requireActivity() as RegistrationActivity
+        val registrationActivity = requireActivity() as RegistrationActivity
         binding.loginButton.setOnClickListener {
-            var login = binding.loginEditText.text.toString()
-            var password = binding.passwordEditText.text.toString()
+            val login = binding.loginEditText.text.toString()
+            val password = binding.passwordEditText.text.toString()
             lifecycleScope.launchWhenResumed {
                 user = registrationActivity.userDao.getUser(login)
             }.invokeOnCompletion {
@@ -35,6 +35,13 @@ class LoginFragment : Fragment() {
             }
         }
         return binding.root
+    }
+
+    fun validateLogin() {
+        val login = binding.loginEditText.text.toString()
+        when {
+            login.isBlank() -> binding.loginInputLayout.error = "Поле не может быть пустым"
+        }
     }
 
     override fun onDestroyView() {
