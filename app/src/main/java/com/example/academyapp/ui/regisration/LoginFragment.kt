@@ -11,6 +11,7 @@ import com.example.academyapp.MainActivity
 import com.example.academyapp.RegistrationActivity
 import com.example.academyapp.databinding.FragmentLoginBinding
 import com.example.academyapp.local.entity.User
+import kotlinx.coroutines.async
 
 class LoginFragment : Fragment() {
 
@@ -20,28 +21,29 @@ class LoginFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentLoginBinding.inflate(inflater, container, false)
-        val registrationActivity = requireActivity() as RegistrationActivity
         binding.loginButton.setOnClickListener {
-            val login = binding.loginEditText.text.toString()
-            val password = binding.passwordEditText.text.toString()
-            lifecycleScope.launchWhenResumed {
-                user = registrationActivity.userDao.getUser(login)
-            }.invokeOnCompletion {
-                if (password == user.password) {
-                    startActivity(Intent(requireActivity(), MainActivity::class.java))
-                } else {
-                    binding.passwordInputLayout.error = "Неверный пароль"
-                }
+            validateLogin()
             }
-        }
         return binding.root
     }
 
     fun validateLogin() {
         val login = binding.loginEditText.text.toString()
-        when {
-            login.isBlank() -> binding.loginInputLayout.error = "Поле не может быть пустым"
+        lifecycleScope.launchWhenResumed {
+            when {
+                login.isBlank() -> binding.loginInputLayout.error = "Поле не может быть пустым"
+                login.length<4 -> binding.loginInputLayout.error = "Слишком короткое имя пользователя"
+                isUserNotExist(login) -> binding.loginInputLayout.error = "Пользователь не существует"
+            }
         }
+    }
+
+    suspend fun isUserNotExist(login:String):Boolean{
+        val registrationActivity = requireActivity() as RegistrationActivity
+        val user = lifecycleScope.async {
+             registrationActivity.userDao.getUser(login)
+        }
+       return user.await().login == null
     }
 
     override fun onDestroyView() {
