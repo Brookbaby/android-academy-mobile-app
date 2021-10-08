@@ -23,11 +23,45 @@ class RegistrationFragment : Fragment() {
                 login = binding.loginEditText.text.toString(),
                 password = binding.passwordEditText.text.toString()
             )
+            validateLogin()
+            validateEmail()
+            validatePassword()
             lifecycleScope.launchWhenResumed {
                 registrationActivity.userDao.addUser(user)
             }
         }
         return binding.root
+    }
+
+    fun validateLogin(){
+        var login = binding.loginEditText.text.toString()
+        lifecycleScope.launchWhenResumed {
+            when{
+                login.isBlank() -> binding.loginInputLayout.error = "Поле не может быть пустым"
+                login.length<4 -> binding.loginInputLayout.error = "Слишком короткое имя пользователя"
+                else -> binding.loginInputLayout.error = null
+            }
+        }
+    }
+    fun validateEmail(){
+        var email = binding.emailEditText.text.toString()
+        lifecycleScope.launchWhenResumed {
+            when{
+                email.isBlank() -> binding.emailInputLayout.error = "Поле не может быть пустым"
+                email.length<6 -> binding.emailInputLayout.error = "Недостаточное количество симовлов"
+                else -> binding.emailInputLayout.error = null
+            }
+        }
+    }
+    fun validatePassword(){
+        var password = binding.passwordEditText.text.toString()
+        lifecycleScope.launchWhenResumed {
+            when{
+                password.isBlank() -> binding.passwordInputLayout.error = "Поле не может быть пустым"
+                password.length<4 -> binding.passwordInputLayout.error = "Недостаточное количество символов"
+                else -> binding.passwordInputLayout.error = null
+            }
+        }
     }
 
     override fun onDestroyView() {
