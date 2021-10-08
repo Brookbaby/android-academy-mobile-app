@@ -11,6 +11,7 @@ import com.example.academyapp.MainActivity
 import com.example.academyapp.RegistrationActivity
 import com.example.academyapp.databinding.FragmentLoginBinding
 import com.example.academyapp.local.entity.User
+import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.async
 
 class LoginFragment : Fragment() {
@@ -23,6 +24,7 @@ class LoginFragment : Fragment() {
         _binding = FragmentLoginBinding.inflate(inflater, container, false)
         binding.loginButton.setOnClickListener {
             validateLogin()
+            validatePassword()
             }
         return binding.root
     }
@@ -34,17 +36,35 @@ class LoginFragment : Fragment() {
                 login.isBlank() -> binding.loginInputLayout.error = "Поле не может быть пустым"
                 login.length<4 -> binding.loginInputLayout.error = "Слишком короткое имя пользователя"
                 isUserNotExist(login) -> binding.loginInputLayout.error = "Пользователь не существует"
+                else -> binding.loginInputLayout.error = null
             }
         }
     }
 
     suspend fun isUserNotExist(login:String):Boolean{
         val registrationActivity = requireActivity() as RegistrationActivity
-        val user = lifecycleScope.async {
+        val user:Deferred<User>? = lifecycleScope.async {
              registrationActivity.userDao.getUser(login)
         }
-       return user.await().login == null
+       return user?.await()?.login == null
     }
+    fun validatePassword(){
+        val password = binding.passwordEditText.text.toString()
+        val login = binding.loginEditText.text.toString()
+        lifecycleScope.launchWhenResumed {
+            when{
+                password.isBlank() -> binding.passwordInputLayout.error = "Поле не может быть пустым"
+                isPasswordNotExist(password,login) -> binding.passwordInputLayout.error = "Неверный пароль"
+                else -> binding.passwordInputLayout.error = null
+            }
+        }
+       }
+
+   suspend fun isPasswordNotExist(password:String,login: String):Boolean{
+       val registrationActivity = requireActivity() as RegistrationActivity
+           return registrationActivity.userDao.getUser(login)!= null&& registrationActivity.userDao.getUser(login).password != password
+   }
+
 
     override fun onDestroyView() {
         super.onDestroyView()

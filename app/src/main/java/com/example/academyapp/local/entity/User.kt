@@ -11,6 +11,6 @@ data class User(
     @PrimaryKey(autoGenerate = true)
     var id: Int = 0,
     var login: String? = null,
-    var password: String
+    var password: String? = null
 ) : Parcelable
 
