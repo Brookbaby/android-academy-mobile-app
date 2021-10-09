@@ -1,71 +1,116 @@
 package com.example.academyapp.ui.regisration
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
+import com.example.academyapp.MainActivity
+import com.example.academyapp.R
 import com.example.academyapp.RegistrationActivity
 import com.example.academyapp.databinding.FragmentRegistrationBinding
 import com.example.academyapp.local.entity.User
 
 class RegistrationFragment : Fragment() {
 
-    private var _binding: FragmentRegistrationBinding? = null
-    private val binding get() = _binding!!
+    private lateinit var binding: FragmentRegistrationBinding
+    private var login = ""
+    private var email = ""
+    private var password = ""
+    private var repeatPassword = ""
+    private lateinit var registrationActivity: RegistrationActivity
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        _binding = FragmentRegistrationBinding.inflate(inflater, container, false)
-        val registrationActivity = requireActivity() as RegistrationActivity
+        binding = FragmentRegistrationBinding.inflate(inflater, container, false)
+        registrationActivity = requireActivity() as RegistrationActivity
         binding.registrationButton.setOnClickListener {
-            val user = User(
-                login = binding.loginEditText.text.toString(),
-                password = binding.passwordEditText.text.toString()
-            )
-            validateLogin()
-            validateEmail()
-            validatePassword()
+            login = binding.loginEditText.text.toString()
+            email = binding.emailEditText.text.toString()
+            password = binding.passwordEditText.text.toString()
+            repeatPassword = binding.repeatPasswordEditText.text.toString()
+            var rulsIsChecked = binding.rulsSwitch.isChecked
             lifecycleScope.launchWhenResumed {
-                registrationActivity.userDao.addUser(user)
+                if (validateLogin() && validateEmail() && validatePassword() && validateRepeatPassword()) {
+                    if (rulsIsChecked) {
+                        findNavController().navigate(R.id.action_registrationFragment_to_loginFragment)
+                    } else {
+                        RulesErrorDialogFragment().show(parentFragmentManager, "RulesErrorDialogFragment")
+                    }
+                }
             }
         }
         return binding.root
     }
 
-    fun validateLogin(){
-        var login = binding.loginEditText.text.toString()
-        lifecycleScope.launchWhenResumed {
-            when{
-                login.isBlank() -> binding.loginInputLayout.error = "Поле не может быть пустым"
-                login.length<4 -> binding.loginInputLayout.error = "Слишком короткое имя пользователя"
-                else -> binding.loginInputLayout.error = null
+    private fun validateLogin(): Boolean {
+        return when {
+            login.isBlank() -> {
+                binding.loginInputLayout.error = "Поле не может быть пустым"
+                false
             }
-        }
-    }
-    fun validateEmail(){
-        var email = binding.emailEditText.text.toString()
-        lifecycleScope.launchWhenResumed {
-            when{
-                email.isBlank() -> binding.emailInputLayout.error = "Поле не может быть пустым"
-                email.length<6 -> binding.emailInputLayout.error = "Недостаточное количество симовлов"
-                else -> binding.emailInputLayout.error = null
+            login.length < 4 -> {
+                binding.loginInputLayout.error = "Слишком короткое имя пользователя"
+                false
             }
-        }
-    }
-    fun validatePassword(){
-        var password = binding.passwordEditText.text.toString()
-        lifecycleScope.launchWhenResumed {
-            when{
-                password.isBlank() -> binding.passwordInputLayout.error = "Поле не может быть пустым"
-                password.length<4 -> binding.passwordInputLayout.error = "Недостаточное количество символов"
-                else -> binding.passwordInputLayout.error = null
+            else -> {
+                binding.loginInputLayout.error = null
+                true
             }
         }
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+    private fun validateEmail(): Boolean {
+        return when {
+            email.isBlank() -> {
+                binding.emailInputLayout.error = "Поле не может быть пустым"
+                false
+            }
+            email.length < 6 -> {
+                binding.emailInputLayout.error = "Недостаточное количество симовлов"
+                false
+            }
+            else -> {
+                binding.emailInputLayout.error = null
+                true
+            }
+        }
+    }
+
+    private fun validatePassword(): Boolean {
+
+        return when {
+            password.isBlank() -> {
+                binding.passwordInputLayout.error = "Поле не может быть пустым"
+                false
+            }
+            password.length < 4 -> {
+                binding.passwordInputLayout.error = "Недостаточное количество символов"
+                false
+            }
+            else -> {
+                binding.passwordInputLayout.error = null
+                true
+            }
+        }
+    }
+
+    private fun validateRepeatPassword(): Boolean {
+        return when {
+            repeatPassword.isBlank() -> {
+                binding.repeatPasswordInputLayout.error = "Поле не может быть пустым"
+                false
+            }
+            password != repeatPassword -> {
+                binding.repeatPasswordInputLayout.error = "Поля не совпадают"
+                false
+            }
+            else -> {
+                binding.passwordInputLayout.error = null
+                true
+            }
+        }
     }
 }

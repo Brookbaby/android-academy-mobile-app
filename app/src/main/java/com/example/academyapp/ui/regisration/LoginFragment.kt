@@ -16,58 +16,77 @@ import kotlinx.coroutines.async
 
 class LoginFragment : Fragment() {
 
-    lateinit var user: User
-    private var _binding: FragmentLoginBinding? = null
-    private val binding get() = _binding!!
+    private lateinit var binding: FragmentLoginBinding
+    private var login = ""
+    private var password = ""
+    private lateinit var registrationActivity: RegistrationActivity
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        _binding = FragmentLoginBinding.inflate(inflater, container, false)
+        binding = FragmentLoginBinding.inflate(inflater, container, false)
+        registrationActivity = requireActivity() as RegistrationActivity
         binding.loginButton.setOnClickListener {
-            validateLogin()
-            validatePassword()
+            login = binding.loginEditText.text.toString()
+            password = binding.passwordEditText.text.toString()
+            lifecycleScope.launchWhenResumed {
+                if (validateLogin() && validatePassword()) {
+                    startActivity(Intent(requireActivity(), MainActivity::class.java))
+                }
             }
+        }
         return binding.root
     }
 
-    fun validateLogin() {
-        val login = binding.loginEditText.text.toString()
-        lifecycleScope.launchWhenResumed {
-            when {
-                login.isBlank() -> binding.loginInputLayout.error = "Поле не может быть пустым"
-                login.length<4 -> binding.loginInputLayout.error = "Слишком короткое имя пользователя"
-                isUserNotExist(login) -> binding.loginInputLayout.error = "Пользователь не существует"
-                else -> binding.loginInputLayout.error = null
+    private suspend fun validateLogin(): Boolean {
+        return when {
+            login.isBlank() -> {
+                binding.loginInputLayout.error = "Поле не может быть пустым"
+                false
+            }
+            login.length < 4 -> {
+                binding.loginInputLayout.error = "Слишком короткое имя пользователя"
+                false
+            }
+            isUserNotExist() -> {
+                binding.loginInputLayout.error = "Пользователь не существует"
+                false
+            }
+            else -> {
+                binding.loginInputLayout.error = null
+                true
             }
         }
     }
 
-    suspend fun isUserNotExist(login:String):Boolean{
-        val registrationActivity = requireActivity() as RegistrationActivity
-        val user:Deferred<User>? = lifecycleScope.async {
-             registrationActivity.userDao.getUser(login)
+    private suspend fun isUserNotExist(): Boolean {
+        val user: Deferred<User?> = lifecycleScope.async {
+            registrationActivity.userDao.getUser(login)
         }
-       return user?.await()?.login == null
+        return user.await() == null
     }
-    fun validatePassword(){
-        val password = binding.passwordEditText.text.toString()
-        val login = binding.loginEditText.text.toString()
-        lifecycleScope.launchWhenResumed {
-            when{
-                password.isBlank() -> binding.passwordInputLayout.error = "Поле не может быть пустым"
-                isPasswordNotExist(password,login) -> binding.passwordInputLayout.error = "Неверный пароль"
-                else -> binding.passwordInputLayout.error = null
+
+    private suspend fun validatePassword(): Boolean {
+        return when {
+            password.isBlank() -> {
+                binding.passwordInputLayout.error = "Поле не может быть пустым"
+                false
+            }
+            password.length < 4 -> {
+                binding.passwordInputLayout.error = "Недостаточное количество символов"
+                false
+            }
+            isPasswordNotExist() -> {
+                binding.passwordInputLayout.error = "Неверный пароль"
+                false
+            }
+            else -> {
+                binding.passwordInputLayout.error = null
+                true
             }
         }
-       }
+    }
 
-   suspend fun isPasswordNotExist(password:String,login: String):Boolean{
-       val registrationActivity = requireActivity() as RegistrationActivity
-           return registrationActivity.userDao.getUser(login)!= null&& registrationActivity.userDao.getUser(login).password != password
-   }
-
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+    private suspend fun isPasswordNotExist(): Boolean {
+        val user:User =registrationActivity.userDao.getUser(login)
+        return user == null && user?.password != password
     }
 }

@@ -1,4 +1,4 @@
 <resources>
-    <string name="app_name">academyApp</string>
+    <string name="app_name">Academy App</string>
     <string name="login_hint">Логин</string>
 </resources>
