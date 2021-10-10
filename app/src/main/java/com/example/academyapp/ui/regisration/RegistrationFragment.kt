@@ -13,6 +13,9 @@ import com.example.academyapp.R
 import com.example.academyapp.RegistrationActivity
 import com.example.academyapp.databinding.FragmentRegistrationBinding
 import com.example.academyapp.local.entity.User
+import android.widget.RadioButton
+import com.example.academyapp.local.DataBase
+
 
 class RegistrationFragment : Fragment() {
 
@@ -35,7 +38,10 @@ class RegistrationFragment : Fragment() {
             lifecycleScope.launchWhenResumed {
                 if (validateLogin() && validateEmail() && validatePassword() && validateRepeatPassword()) {
                     if (rulsIsChecked) {
-                        findNavController().navigate(R.id.action_registrationFragment_to_loginFragment)
+                       val user = User(login = login,password = password)
+                        registrationActivity.userDao.addUser(user)
+                        registrationActivity.navigateToLogin()
+                        (registrationActivity.binding.fragmentsSwitch.getChildAt(0) as RadioButton).isChecked = true
                     } else {
                         RulesErrorDialogFragment().show(parentFragmentManager, "RulesErrorDialogFragment")
                     }

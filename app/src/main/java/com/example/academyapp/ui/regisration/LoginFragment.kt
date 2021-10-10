@@ -30,6 +30,7 @@ class LoginFragment : Fragment() {
             lifecycleScope.launchWhenResumed {
                 if (validateLogin() && validatePassword()) {
                     startActivity(Intent(requireActivity(), MainActivity::class.java))
+                    registrationActivity.prefs?.edit()?.putBoolean("session", true)?.apply()
                 }
             }
         }
@@ -86,7 +87,7 @@ class LoginFragment : Fragment() {
     }
 
     private suspend fun isPasswordNotExist(): Boolean {
-        val user:User =registrationActivity.userDao.getUser(login)
+        val user: User = registrationActivity.userDao.getUser(login)
         return user == null && user?.password != password
     }
 }
