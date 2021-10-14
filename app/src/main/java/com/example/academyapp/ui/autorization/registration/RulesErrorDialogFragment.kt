@@ -1,4 +1,4 @@
-package com.example.academyapp.ui.regisration
+package com.example.academyapp.ui.autorization.registration
 
 import android.os.Bundle
 import android.view.LayoutInflater

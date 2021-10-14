@@ -1,30 +1,25 @@
 package com.example.academyapp
 
-import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import com.example.academyapp.databinding.ActivityRegistrationBinding
-import com.example.academyapp.local.DataBase
-import com.example.academyapp.local.UserDao
-import android.content.SharedPreferences
+import com.example.academyapp.domain.local.DataBase
+import com.example.academyapp.domain.local.UserDao
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class RegistrationActivity : AppCompatActivity() {
 
     lateinit var userDao: UserDao
     lateinit var binding: ActivityRegistrationBinding
     var fragmentId = 0
-    var prefs: SharedPreferences? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityRegistrationBinding.inflate(layoutInflater)
         setContentView(binding.root)
         initDao()
-        initPrefs()
-        checkUserIsLogined()
         with(binding) {
             registrationSwitch.setOnClickListener {
                 navigateToRegistration()
@@ -56,17 +51,6 @@ class RegistrationActivity : AppCompatActivity() {
             findNavController(R.id.fragmentContainerView).navigate(R.id.action_loginFragment_to_registrationFragment)
             binding.loginSwitch.setTextColor(resources.getColor(R.color.nice_blue))
             binding.registrationSwitch.setTextColor(resources.getColor(R.color.white))
-        }
-    }
-
-    private fun initPrefs() {
-        prefs = getSharedPreferences("academyApp", Context.MODE_PRIVATE)
-    }
-
-    private fun checkUserIsLogined() {
-        val isLogined = prefs?.getBoolean("session", false)
-        if (isLogined == true) {
-            startActivity(Intent(this, MainActivity::class.java))
         }
     }
 }

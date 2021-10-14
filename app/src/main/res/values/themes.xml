@@ -2,8 +2,8 @@
     <!-- Base application theme. -->
     <style name="Theme.AcademyApp" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/purple_500</item>
-        <item name="colorPrimaryVariant">@color/purple_700</item>
+        <item name="colorPrimary">@color/nice_blue</item>
+        <item name="colorPrimaryVariant">@color/nice_blue</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/teal_200</item>
@@ -17,17 +17,5 @@
     <style name="Theme.AcademyApp.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
-    </style>
-
-    <style name="Theme.AcademyApp.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
-
-    <style name="Theme.AcademyApp.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
-
-    <style name="ButtonStyle2" parent="Base.Widget.AppCompat.Button">
-        <!--<item name="android:fontFamily">sans-serif-light</item>-->
-        <!--<item name="android:textStyle">bold</item>-->
-        <item name="android:textColor">@color/black</item>
-        <item name="android:textSize">20sp</item>
-        <item name="android:textAllCaps">false</item>
     </style>
 </resources>

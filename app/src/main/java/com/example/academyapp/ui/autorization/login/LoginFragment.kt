@@ -1,4 +1,4 @@
-package com.example.academyapp.ui.regisration
+package com.example.academyapp.ui.autorization.login
 
 import android.content.Intent
 import android.os.Bundle
@@ -6,16 +6,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.example.academyapp.MainActivity
 import com.example.academyapp.RegistrationActivity
 import com.example.academyapp.databinding.FragmentLoginBinding
-import com.example.academyapp.local.entity.User
+import com.example.academyapp.domain.local.entity.User
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.async
 
+@AndroidEntryPoint
 class LoginFragment : Fragment() {
 
+    val vm: LoginVM by viewModels()
     private lateinit var binding: FragmentLoginBinding
     private var login = ""
     private var password = ""
@@ -23,18 +27,26 @@ class LoginFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentLoginBinding.inflate(inflater, container, false)
+        checkUserIsLogined()
         registrationActivity = requireActivity() as RegistrationActivity
         binding.loginButton.setOnClickListener {
             login = binding.loginEditText.text.toString()
             password = binding.passwordEditText.text.toString()
             lifecycleScope.launchWhenResumed {
                 if (validateLogin() && validatePassword()) {
+                    vm.sharedPreferences.edit()?.putBoolean("session", true)?.apply()
                     startActivity(Intent(requireActivity(), MainActivity::class.java))
-                    registrationActivity.prefs?.edit()?.putBoolean("session", true)?.apply()
                 }
             }
         }
         return binding.root
+    }
+
+    private fun checkUserIsLogined() {
+        val isLogined = vm.sharedPreferences.getBoolean("session", false)
+        if (isLogined == true) {
+            startActivity(Intent(requireActivity(), MainActivity::class.java))
+        }
     }
 
     private suspend fun validateLogin(): Boolean {

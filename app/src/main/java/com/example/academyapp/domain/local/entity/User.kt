@@ -1,4 +1,4 @@
-package com.example.academyapp.local.entity
+package com.example.academyapp.domain.local.entity
 
 import android.os.Parcelable
 import androidx.room.Entity

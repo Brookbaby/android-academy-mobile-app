@@ -1,24 +1,22 @@
-package com.example.academyapp.ui.regisration
+package com.example.academyapp.ui.autorization.registration
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.RadioButton
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.findNavController
-import com.example.academyapp.MainActivity
-import com.example.academyapp.R
 import com.example.academyapp.RegistrationActivity
 import com.example.academyapp.databinding.FragmentRegistrationBinding
-import com.example.academyapp.local.entity.User
-import android.widget.RadioButton
-import com.example.academyapp.local.DataBase
+import com.example.academyapp.domain.local.entity.User
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class RegistrationFragment : Fragment() {
 
+    val vm: RegistrationVM by viewModels()
     private lateinit var binding: FragmentRegistrationBinding
     private var login = ""
     private var email = ""
@@ -38,7 +36,7 @@ class RegistrationFragment : Fragment() {
             lifecycleScope.launchWhenResumed {
                 if (validateLogin() && validateEmail() && validatePassword() && validateRepeatPassword()) {
                     if (rulsIsChecked) {
-                       val user = User(login = login,password = password)
+                        val user = User(login = login, password = password)
                         registrationActivity.userDao.addUser(user)
                         registrationActivity.navigateToLogin()
                         (registrationActivity.binding.fragmentsSwitch.getChildAt(0) as RadioButton).isChecked = true
