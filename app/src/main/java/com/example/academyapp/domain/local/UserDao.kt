@@ -12,7 +12,7 @@ interface UserDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun addUser(user: User)
 
-    @Query("SELECT * FROM user_table u WHERE u.login= :login AND u.password=:password")
-    suspend fun getUser(login: String, password: String):User
+    @Query("SELECT * FROM user_table u WHERE u.login= :login")
+    suspend fun getUser(login: String):User
 
 }

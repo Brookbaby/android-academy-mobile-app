@@ -19,7 +19,7 @@ class RegistrationActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityRegistrationBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        initDao()
+        //initDao()
         with(binding) {
             registrationSwitch.setOnClickListener {
                 navigateToRegistration()
@@ -31,10 +31,10 @@ class RegistrationActivity : AppCompatActivity() {
         }
     }
 
-    private fun initDao() {
+    /*private fun initDao() {
         val dataBase = DataBase.getDataBase(this)
         userDao = dataBase.userDao()
-    }
+    }*/
 
     fun navigateToLogin() {
         fragmentId = findNavController(R.id.fragmentContainerView).currentDestination?.id ?: 0

@@ -6,6 +6,5 @@ import com.example.academyapp.domain.local.entity.User
 
 @Database(entities = [User::class], version = 1, exportSchema = false)
 abstract class DataBase : RoomDatabase() {
-
     abstract fun getUserDao(): UserDao
 }

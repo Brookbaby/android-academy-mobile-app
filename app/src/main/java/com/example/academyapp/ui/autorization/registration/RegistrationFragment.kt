@@ -12,6 +12,8 @@ import com.example.academyapp.RegistrationActivity
 import com.example.academyapp.databinding.FragmentRegistrationBinding
 import com.example.academyapp.domain.local.entity.User
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Deferred
+import kotlinx.coroutines.async
 
 @AndroidEntryPoint
 class RegistrationFragment : Fragment() {
@@ -32,11 +34,11 @@ class RegistrationFragment : Fragment() {
             email = binding.emailEditText.text.toString()
             password = binding.passwordEditText.text.toString()
             repeatPassword = binding.repeatPasswordEditText.text.toString()
-            var rulsIsChecked = binding.rulsSwitch.isChecked
+            val rulsIsChecked = binding.rulsSwitch.isChecked
             lifecycleScope.launchWhenResumed {
-                if (validateLogin() && validateEmail() && validatePassword() && validateRepeatPassword()) {
+                if (checkLogin() && checkMail() && checkPassword() && checkSecondPassword()) {
                     if (rulsIsChecked) {
-                        val user = User(login = login, password = password)
+                        val user = User(login = login, password = password, email = email)
                         registrationActivity.userDao.addUser(user)
                         registrationActivity.navigateToLogin()
                         (registrationActivity.binding.fragmentsSwitch.getChildAt(0) as RadioButton).isChecked = true
@@ -49,71 +51,100 @@ class RegistrationFragment : Fragment() {
         return binding.root
     }
 
-    private fun validateLogin(): Boolean {
-        return when {
-            login.isBlank() -> {
-                binding.loginInputLayout.error = "Поле не может быть пустым"
-                false
-            }
-            login.length < 4 -> {
-                binding.loginInputLayout.error = "Слишком короткое имя пользователя"
-                false
-            }
-            else -> {
-                binding.loginInputLayout.error = null
-                true
-            }
-        }
-    }
-
-    private fun validateEmail(): Boolean {
-        return when {
-            email.isBlank() -> {
-                binding.emailInputLayout.error = "Поле не может быть пустым"
-                false
-            }
-            email.length < 6 -> {
-                binding.emailInputLayout.error = "Недостаточное количество симовлов"
-                false
-            }
-            else -> {
-                binding.emailInputLayout.error = null
-                true
+    private suspend fun checkLogin(): Boolean {
+        with(binding) {
+            return when {
+                login.isBlank() -> {
+                    loginInputLayout.error = "Поле не может быть пустым"
+                    false
+                }
+                login.length < 4 -> {
+                    loginInputLayout.error = "Слишком короткое имя пользователя"
+                    false
+                }
+                isUserExist() -> {
+                    loginInputLayout.error = "Такой пользователь существует"
+                    false
+                }
+                else -> {
+                    loginInputLayout.error = null
+                    true
+                }
             }
         }
     }
 
-    private fun validatePassword(): Boolean {
+    private suspend fun isUserExist(): Boolean {
+        val user: Deferred<User?> = lifecycleScope.async {
+            registrationActivity.userDao.getUser(login)
+        }
+        return user.await() != null
+    }
 
-        return when {
-            password.isBlank() -> {
-                binding.passwordInputLayout.error = "Поле не может быть пустым"
-                false
-            }
-            password.length < 4 -> {
-                binding.passwordInputLayout.error = "Недостаточное количество символов"
-                false
-            }
-            else -> {
-                binding.passwordInputLayout.error = null
-                true
+    private fun checkMail(): Boolean {
+        with(binding) {
+            return when {
+                email.isBlank() -> {
+                    emailInputLayout.error = "Поле не может быть пустым"
+                    false
+                }
+                email.length < 6 -> {
+                    emailInputLayout.error = "Недостаточно символов"
+                    false
+                }
+                else -> {
+                    emailInputLayout.error = null
+                    true
+                }
             }
         }
     }
 
-    private fun validateRepeatPassword(): Boolean {
-        return when {
-            repeatPassword.isBlank() -> {
-                binding.repeatPasswordInputLayout.error = "Поле не может быть пустым"
-                false
+    private suspend fun checkPassword(): Boolean {
+        with(binding) {
+            return when {
+                password.isBlank() -> {
+                    passwordInputLayout.error = "Поле не может быть пустым"
+                    false
+                }
+                password.length < 4 -> {
+                    passwordInputLayout.error = "Недостаточное количество символов"
+                    false
+                }
+                isPasswordNotExist() -> {
+                    passwordInputLayout.error = "Неверный пароль"
+                    false
+                }
+                else -> {
+                    passwordInputLayout.error = null
+                    true
+                }
             }
-            password != repeatPassword -> {
-                binding.repeatPasswordInputLayout.error = "Поля не совпадают"
-                false
-            }
-            else -> {
-                binding.passwordInputLayout.error = null
-                true
+        }
+    }
+
+    private suspend fun isPasswordNotExist(): Boolean {
+        val user: Deferred<User?> = lifecycleScope.async {
+            registrationActivity.userDao.getUser(login)
+        }
+        return user.await()?.password != password
+    }
+
+    private fun checkSecondPassword(): Boolean {
+        with(binding) {
+            return when {
+                repeatPassword.isBlank() -> {
+                    repeatPasswordInputLayout.error = "Поле не может быть пустым"
+                    false
+                }
+                password != repeatPassword -> {
+                    repeatPasswordInputLayout.error = "Поля не совпадают"
+                    false
+                }
+                else -> {
+                    repeatPasswordInputLayout.error = null
+                    true
+                }
             }
         }
     }

@@ -18,7 +18,7 @@
         <activity
             android:name=".RegistrationActivity"
             android:exported="true"
-            android:windowSoftInputMode="adjustResize"
+            android:windowSoftInputMode="adjustResize|stateAlwaysHidden"
             android:theme="@style/Theme.AcademyApp.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
