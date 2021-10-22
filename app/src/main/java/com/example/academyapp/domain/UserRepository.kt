@@ -13,7 +13,7 @@ class UserRepository @Inject constructor(private val userDao: UserDao, private v
 
     suspend fun getSession() = sharedPrefs.getBoolean("session", false)
 
-    suspend fun getUser(login: String, password: String) = userDao.getUser(login, password)
+    suspend fun getUser(login: String) = userDao.getUser(login)
 
     suspend fun addUser(login: String, password: String, email: String) {
         val user = User(login = login, password = password, email = email)

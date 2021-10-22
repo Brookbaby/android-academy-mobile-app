@@ -38,8 +38,7 @@ class RegistrationFragment : Fragment() {
             lifecycleScope.launchWhenResumed {
                 if (checkLogin() && checkMail() && checkPassword() && checkSecondPassword()) {
                     if (rulsIsChecked) {
-                        val user = User(login = login, password = password, email = email)
-                        registrationActivity.userDao.addUser(user)
+                        vm.userRepository.addUser(login,password,email)
                         registrationActivity.navigateToLogin()
                         (registrationActivity.binding.fragmentsSwitch.getChildAt(0) as RadioButton).isChecked = true
                     } else {
@@ -76,7 +75,7 @@ class RegistrationFragment : Fragment() {
 
     private suspend fun isUserExist(): Boolean {
         val user: Deferred<User?> = lifecycleScope.async {
-            registrationActivity.userDao.getUser(login)
+            vm.userRepository.getUser(login)
         }
         return user.await() != null
     }
@@ -111,23 +110,12 @@ class RegistrationFragment : Fragment() {
                     passwordInputLayout.error = "Недостаточное количество символов"
                     false
                 }
-                isPasswordNotExist() -> {
-                    passwordInputLayout.error = "Неверный пароль"
-                    false
-                }
                 else -> {
                     passwordInputLayout.error = null
                     true
                 }
             }
         }
-    }
-
-    private suspend fun isPasswordNotExist(): Boolean {
-        val user: Deferred<User?> = lifecycleScope.async {
-            registrationActivity.userDao.getUser(login)
-        }
-        return user.await()?.password != password
     }
 
     private fun checkSecondPassword(): Boolean {

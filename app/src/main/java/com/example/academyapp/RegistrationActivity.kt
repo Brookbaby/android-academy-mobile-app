@@ -11,7 +11,6 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class RegistrationActivity : AppCompatActivity() {
 
-    lateinit var userDao: UserDao
     lateinit var binding: ActivityRegistrationBinding
     var fragmentId = 0
 

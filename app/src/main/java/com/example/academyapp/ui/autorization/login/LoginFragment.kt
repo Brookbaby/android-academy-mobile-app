@@ -65,7 +65,7 @@ class LoginFragment : Fragment() {
 
     private suspend fun isUserNotExist(): Boolean {
         val user: Deferred<User?> = lifecycleScope.async {
-            registrationActivity.userDao.getUser(login)
+            vm.userRepository.getUser(login)
         }
         return user.await() == null
     }
@@ -95,7 +95,7 @@ class LoginFragment : Fragment() {
 
     private suspend fun isPasswordNotExist(): Boolean {
         val user: Deferred<User?> = lifecycleScope.async {
-            registrationActivity.userDao.getUser(login)
+            vm.userRepository.getUser(login)
         }
         return user.await()?.password != password
     }
