@@ -17,16 +17,3 @@ class LoginVM @Inject constructor(val userRepository: UserRepository) : ViewMode
     var repeatpassword = MutableLiveData("")
 }
 
-/*private fun checkUserIsLogined() {
-    val isLogined = vm.sharedPreferences.getBoolean("session", false)
-    if (isLogined == true) {
-        startActivity(Intent(requireActivity(), MainActivity::class.java))
-    }
-}*/
-
-/**/
-
-
-
-/*
-}*/

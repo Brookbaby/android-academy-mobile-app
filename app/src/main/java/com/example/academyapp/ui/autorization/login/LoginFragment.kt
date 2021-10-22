@@ -27,6 +27,9 @@ class LoginFragment : Fragment() {
         binding = FragmentLoginBinding.inflate(inflater, container, false)
         binding.lifecycleOwner = this
         binding.vm = vm
+        lifecycleScope.launchWhenResumed {
+            checkUserIsLogined()
+        }
         binding.loginButton.setOnClickListener {
             login = binding.loginEditText.text.toString()
             password = binding.passwordEditText.text.toString()
@@ -100,4 +103,10 @@ class LoginFragment : Fragment() {
         return user.await()?.password != password
     }
 
+    private suspend fun checkUserIsLogined() {
+        val isLogined = vm.userRepository.getSession()
+        if (isLogined == true) {
+            startActivity(Intent(requireActivity(), MainActivity::class.java))
+        }
+    }
 }
