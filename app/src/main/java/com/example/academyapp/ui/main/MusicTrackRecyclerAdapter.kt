@@ -9,7 +9,10 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.academyapp.R
 import com.example.academyapp.databinding.ItemTrackBinding
 
-class MusicTrackRecyclerAdapter(private val tracks: List<Track>) :
+class MusicTrackRecyclerAdapter(
+    private val tracks: List<Track>,
+    var click: () -> Unit
+) :
     RecyclerView.Adapter<MusicTrackRecyclerAdapter.TrackViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TrackViewHolder {
@@ -26,7 +29,7 @@ class MusicTrackRecyclerAdapter(private val tracks: List<Track>) :
         return tracks.size
     }
 
-    class TrackViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class TrackViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         private val binding by viewBinding(ItemTrackBinding::bind)
 
@@ -35,6 +38,9 @@ class MusicTrackRecyclerAdapter(private val tracks: List<Track>) :
             binding.nameTrackTextView.text = track.trackName
             binding.singerTextView.text = track.singerName
             binding.downloadImageView.isVisible = track.trackDownloaded
+            binding.trackLayout.setOnClickListener {
+                click.invoke()
+            }
         }
     }
 }

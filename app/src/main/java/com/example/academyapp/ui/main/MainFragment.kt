@@ -5,6 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
+import com.example.academyapp.R
 import com.example.academyapp.databinding.FragmentMainBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -24,7 +26,7 @@ class MainFragment : Fragment() {
             Track(trackName = "Moneyyy",singerName = "Инст"),
             Track(trackName = "Moooney",singerName = "самка", trackDownloaded = true)
         )
-        binding.tracksRecyclerView.adapter = MusicTrackRecyclerAdapter(tracks)
+        binding.tracksRecyclerView.adapter = MusicTrackRecyclerAdapter(tracks) { clickOnTrack() }
 
         /*binding.buttonLogOut.setOnClickListener {
             (requireActivity() as MainActivity).prefs?.edit()?.putBoolean("session", false)?.apply()
@@ -32,5 +34,9 @@ class MainFragment : Fragment() {
         }*/
         return binding.root
 
+    }
+
+    private fun clickOnTrack() {
+        findNavController().navigate(R.id.action_mainFragment_to_trackInfoFragment)
     }
 }

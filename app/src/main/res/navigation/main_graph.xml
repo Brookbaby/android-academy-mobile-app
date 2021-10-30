@@ -10,5 +10,14 @@
         android:name="com.example.academyapp.ui.main.MainFragment"
         android:label="MainFragment"
         tools:layout="@layout/fragment_main">
+        <action
+            android:id="@+id/action_mainFragment_to_trackInfoFragment"
+            app:destination="@id/trackInfoFragment"
+            app:enterAnim="@android:anim/slide_in_left" />
     </fragment>
+    <fragment
+        android:id="@+id/trackInfoFragment"
+        android:name="com.example.academyapp.ui.track.TrackInfoFragment"
+        android:label="TrackInfoFragment"
+        tools:layout="@layout/fragment_trackinfo"/>
 </navigation>
