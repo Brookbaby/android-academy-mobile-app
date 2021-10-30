@@ -85,4 +85,7 @@ dependencies {
 
     //Paging 3
     implementation 'androidx.paging:paging-runtime-ktx:3.1.0-alpha04'
+
+    implementation 'com.github.kirich1409:viewbindingpropertydelegate:1.5.0-beta01'
+    implementation 'com.github.kirich1409:viewbindingpropertydelegate-noreflection:1.5.0-beta01'
 }
