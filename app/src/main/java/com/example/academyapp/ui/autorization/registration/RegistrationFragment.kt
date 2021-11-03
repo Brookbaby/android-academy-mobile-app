@@ -38,7 +38,7 @@ class RegistrationFragment : Fragment() {
             lifecycleScope.launchWhenResumed {
                 if (checkLogin() && checkMail() && checkPassword() && checkSecondPassword()) {
                     if (rulsIsChecked) {
-                        vm.userRepository.addUser(login,password,email)
+                        vm.repository.addUser(login,password,email)
                         registrationActivity.navigateToLogin()
                         (registrationActivity.binding.fragmentsSwitch.getChildAt(0) as RadioButton).isChecked = true
                     } else {
@@ -75,7 +75,7 @@ class RegistrationFragment : Fragment() {
 
     private suspend fun isUserExist(): Boolean {
         val user: Deferred<User?> = lifecycleScope.async {
-            vm.userRepository.getUser(login)
+            vm.repository.getUser(login)
         }
         return user.await() != null
     }

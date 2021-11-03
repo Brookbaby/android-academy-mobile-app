@@ -6,11 +6,15 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import by.kirich1409.viewbindingdelegate.viewBinding
+import com.bumptech.glide.Glide
 import com.example.academyapp.R
 import com.example.academyapp.databinding.ItemTrackBinding
+import com.example.academyapp.domain.api.responses.TrackResponse
+import kotlin.random.Random.Default.nextBoolean
+import retrofit2.Response
 
 class MusicTrackRecyclerAdapter(
-    private val tracks: List<Track>,
+    private val tracks: List<TrackResponse>,
     var click: () -> Unit
 ) :
     RecyclerView.Adapter<MusicTrackRecyclerAdapter.TrackViewHolder>() {
@@ -33,13 +37,16 @@ class MusicTrackRecyclerAdapter(
 
         private val binding by viewBinding(ItemTrackBinding::bind)
 
-        fun bind(track: Track) {
-            //binding.albumImageView.setImageDrawable(track.albumPhoto)
-            binding.nameTrackTextView.text = track.trackName
-            binding.singerTextView.text = track.singerName
-            binding.downloadImageView.isVisible = track.trackDownloaded
+        fun bind(track: TrackResponse) {
+            binding.nameTrackTextView.text = track.title
+            binding.singerTextView.text = track.artistResponse.name
+            binding.downloadImageView.isVisible = nextBoolean()
+            Glide.with(binding.root.context)
+                .load(track.albumResponse.cover)
+                .centerCrop()
+                .into(binding.albumImageView)
             binding.trackLayout.setOnClickListener {
-                click.invoke()
+               // click.invoke()
             }
         }
     }

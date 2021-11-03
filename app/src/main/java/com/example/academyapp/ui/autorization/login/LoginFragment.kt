@@ -35,7 +35,7 @@ class LoginFragment : Fragment() {
             password = binding.passwordEditText.text.toString()
             lifecycleScope.launchWhenResumed {
                 if (checkLogin() && checkPassword()) {
-                    vm.userRepository.putSession(true)
+                    vm.repository.putSession(true)
                     startActivity(Intent(requireActivity(), MainActivity::class.java))
                 }
             }
@@ -68,7 +68,7 @@ class LoginFragment : Fragment() {
 
     private suspend fun isUserNotExist(): Boolean {
         val user: Deferred<User?> = lifecycleScope.async {
-            vm.userRepository.getUser(login)
+            vm.repository.getUser(login)
         }
         return user.await() == null
     }
@@ -98,13 +98,13 @@ class LoginFragment : Fragment() {
 
     private suspend fun isPasswordNotExist(): Boolean {
         val user: Deferred<User?> = lifecycleScope.async {
-            vm.userRepository.getUser(login)
+            vm.repository.getUser(login)
         }
         return user.await()?.password != password
     }
 
     private suspend fun checkUserIsLogined() {
-        val isLogined = vm.userRepository.getSession()
+        val isLogined = vm.repository.getSession()
         if (isLogined == true) {
             startActivity(Intent(requireActivity(), MainActivity::class.java))
         }

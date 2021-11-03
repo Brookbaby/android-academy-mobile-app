@@ -1,16 +1,14 @@
 package com.example.academyapp.ui.autorization.login
 
 import androidx.databinding.ObservableField
-import androidx.databinding.ObservableParcelable
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.academyapp.domain.UserRepository
+import com.example.academyapp.domain.Repository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
-import kotlin.properties.ObservableProperty
 
 @HiltViewModel
-class LoginVM @Inject constructor(val userRepository: UserRepository) : ViewModel() {
+class LoginVM @Inject constructor(val repository: Repository) : ViewModel() {
 
     var login = ObservableField<String>()
     var password = MutableLiveData("")
