@@ -9,13 +9,14 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bumptech.glide.Glide
 import com.example.academyapp.R
 import com.example.academyapp.databinding.ItemTrackBinding
+import com.example.academyapp.domain.api.responses.AlbumResponse
 import com.example.academyapp.domain.api.responses.TrackResponse
 import kotlin.random.Random.Default.nextBoolean
 import retrofit2.Response
 
 class MusicTrackRecyclerAdapter(
     private val tracks: List<TrackResponse>,
-    var click: () -> Unit
+    var click: (TrackResponse) -> Unit
 ) :
     RecyclerView.Adapter<MusicTrackRecyclerAdapter.TrackViewHolder>() {
 
@@ -46,7 +47,7 @@ class MusicTrackRecyclerAdapter(
                 .centerCrop()
                 .into(binding.albumImageView)
             binding.trackLayout.setOnClickListener {
-               // click.invoke()
+               click.invoke(track)
             }
         }
     }

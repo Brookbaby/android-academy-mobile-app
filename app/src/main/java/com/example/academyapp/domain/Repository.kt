@@ -2,6 +2,7 @@ package com.example.academyapp.domain
 
 import android.content.SharedPreferences
 import com.example.academyapp.domain.api.MusicService
+import com.example.academyapp.domain.api.responses.TracksResponse
 import com.example.academyapp.domain.local.UserDao
 import com.example.academyapp.domain.local.entity.User
 import javax.inject.Inject
@@ -25,5 +26,8 @@ class Repository @Inject constructor(
         userDao.addUser(user)
     }
 
-    suspend fun getTracks() = musicService.getRecentTracks()
+    suspend fun getTracks(): TracksResponse {
+        val tracks = musicService.getRecentTracks()
+       return tracks
+    }
 }
