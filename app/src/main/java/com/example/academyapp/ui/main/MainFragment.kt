@@ -14,6 +14,10 @@ import com.example.academyapp.R
 import com.example.academyapp.databinding.FragmentMainBinding
 import com.example.academyapp.domain.api.responses.TrackResponse
 import dagger.hilt.android.AndroidEntryPoint
+import android.widget.TextView
+
+
+
 
 @AndroidEntryPoint
 class MainFragment : Fragment() {
