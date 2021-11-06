@@ -96,4 +96,22 @@
         app:layout_constraintStart_toEndOf="@+id/rewindTrackImageView"
         app:layout_constraintTop_toTopOf="@+id/pauseImageView"
         app:srcCompat="@drawable/ic_baseline_play_arrow_24" />
+
+    <TextView
+        android:id="@+id/zeroTextView"
+        android:textSize="15dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0"
+        app:layout_constraintStart_toStartOf="@+id/trackProgressBar"
+        app:layout_constraintTop_toBottomOf="@+id/trackProgressBar" />
+
+    <TextView
+        android:id="@+id/endTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0"
+        android:textSize="15dp"
+        app:layout_constraintEnd_toEndOf="@+id/trackProgressBar"
+        app:layout_constraintTop_toBottomOf="@+id/trackProgressBar" />
 </androidx.constraintlayout.widget.ConstraintLayout>
