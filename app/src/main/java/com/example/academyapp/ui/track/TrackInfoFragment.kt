@@ -13,6 +13,10 @@ import android.widget.SeekBar
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.NavController
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.setupWithNavController
 import com.bumptech.glide.Glide
 import com.example.academyapp.R
 import com.example.academyapp.databinding.FragmentTrackinfoBinding
@@ -39,7 +43,11 @@ class TrackInfoFragment : Fragment() {
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         binding = FragmentTrackinfoBinding.inflate(inflater, container, false)
         track = arguments?.getParcelable("track")
         initMediaPlayer()
@@ -63,6 +71,15 @@ class TrackInfoFragment : Fragment() {
         }
 
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        val navController = findNavController()
+        val appBarConfig = AppBarConfiguration(navController.graph)
+        val toolBar = binding.toolbar
+        toolBar.setupWithNavController(navController,appBarConfig)
+
+        super.onViewCreated(view, savedInstanceState)
     }
 
     private fun initMediaPlayer() {
@@ -98,9 +115,16 @@ class TrackInfoFragment : Fragment() {
         }
         binding.endTextView.text = formatTime(mMediaPlayer.duration)
 
+        binding.rewindTrackImageView.setOnClickListener {
+            mMediaPlayer.seekTo(mMediaPlayer.currentPosition-2000)
+        }
+        binding.forwardTrackImageView.setOnClickListener {
+            mMediaPlayer.seekTo(mMediaPlayer.currentPosition+2000)
+        }
+
     }
 
-    private fun formatTime(time:Int):String{
+    private fun formatTime(time: Int): String {
         val formatter: DateFormat = SimpleDateFormat("mm:ss", Locale.US)
         formatter.timeZone = TimeZone.getTimeZone("UTC")
         return formatter.format(Date(time.toLong()))
