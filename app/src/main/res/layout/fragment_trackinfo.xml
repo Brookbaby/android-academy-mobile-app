@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#A6A5A5">
@@ -10,8 +9,8 @@
         android:id="@+id/albumInfoimageView"
         android:layout_width="match_parent"
         android:layout_height="350dp"
-        android:layout_marginTop="40dp"
         android:layout_marginStart="16dp"
+        android:layout_marginTop="40dp"
         android:layout_marginEnd="16dp"
         android:background="#D6D6D6"
         app:layout_constraintEnd_toEndOf="parent"
@@ -23,11 +22,11 @@
         android:id="@+id/trackNameInfotextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
-        android:layout_marginTop="40dp"
-        android:textSize="25dp"
         android:layout_marginStart="16dp"
+        android:layout_marginTop="40dp"
         android:fontFamily="sans-serif-black"
+        android:text="TextView"
+        android:textSize="25dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/albumInfoimageView" />
 
@@ -35,36 +34,35 @@
         android:id="@+id/singerNameInfotextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:text="TextView"
         android:textSize="16dp"
-        android:layout_marginTop="8dp"
         app:layout_constraintStart_toStartOf="@+id/trackNameInfotextView"
         app:layout_constraintTop_toBottomOf="@+id/trackNameInfotextView" />
 
-    <ProgressBar
+    <SeekBar
         android:id="@+id/trackProgressBar"
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="match_parent"
-        android:layout_marginHorizontal="30dp"
-        android:layout_marginTop="80dp"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="80dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/singerNameInfotextView" />
 
-    <ImageButton
+    <ImageView
         android:id="@+id/pauseImageView"
         android:layout_width="60dp"
-        android:visibility="invisible"
         android:layout_height="80dp"
-        app:layout_constraintBottom_toBottomOf="parent"
         android:backgroundTint="@color/gray2"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/trackProgressBar"
-        app:srcCompat="@drawable/ic_baseline_pause_24" />
+        app:srcCompat="@drawable/ic_play" />
 
-    <ImageButton
+    <ImageView
         android:id="@+id/rewindTrackImageView"
         android:layout_width="60dp"
         android:layout_height="80dp"
@@ -75,7 +73,7 @@
         app:layout_constraintTop_toTopOf="@+id/pauseImageView"
         app:srcCompat="@drawable/ic_baseline_fast_rewind_24" />
 
-    <ImageButton
+    <ImageView
         android:id="@+id/forwardTrackImageView"
         android:layout_width="60dp"
         android:layout_height="80dp"
@@ -86,23 +84,13 @@
         app:layout_constraintTop_toTopOf="@+id/pauseImageView"
         app:srcCompat="@drawable/ic_baseline_fast_forward_24" />
 
-    <ImageButton
-        android:id="@+id/playImageView"
-        android:layout_width="60dp"
-        android:layout_height="80dp"
-        android:backgroundTint="@color/gray2"
-        app:layout_constraintBottom_toBottomOf="@+id/pauseImageView"
-        app:layout_constraintEnd_toStartOf="@+id/forwardTrackImageView"
-        app:layout_constraintStart_toEndOf="@+id/rewindTrackImageView"
-        app:layout_constraintTop_toTopOf="@+id/pauseImageView"
-        app:srcCompat="@drawable/ic_baseline_play_arrow_24" />
-
     <TextView
         android:id="@+id/zeroTextView"
-        android:textSize="15dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="0"
+        android:text="00:00"
+        android:layout_marginStart="8dp"
+        android:textSize="15dp"
         app:layout_constraintStart_toStartOf="@+id/trackProgressBar"
         app:layout_constraintTop_toBottomOf="@+id/trackProgressBar" />
 
@@ -111,6 +99,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="0"
+        android:layout_marginEnd="8dp"
         android:textSize="15dp"
         app:layout_constraintEnd_toEndOf="@+id/trackProgressBar"
         app:layout_constraintTop_toBottomOf="@+id/trackProgressBar" />

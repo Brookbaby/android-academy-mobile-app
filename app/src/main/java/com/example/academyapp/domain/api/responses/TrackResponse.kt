@@ -12,6 +12,6 @@ data class TrackResponse(
     @SerializedName("explicit_content_cover") var explicitContentCover: Int,
     @SerializedName("id") var id: Int,
     @SerializedName("md5_image") var md5Image: String,
-    @SerializedName("preview") var preview: String, /*mp3 файл*/
+    @SerializedName("preview") var musicFile: String, /*mp3 файл*/
     @SerializedName("title") var title: String
 ) : Parcelable
