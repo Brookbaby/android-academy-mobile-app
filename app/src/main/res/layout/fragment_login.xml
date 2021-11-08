@@ -22,18 +22,18 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="16dp"
             android:hint="@string/login_hint"
-            app:boxStrokeColor="@color/nice_blue"
+            app:boxStrokeColor="@color/main_color"
             app:counterEnabled="true"
             app:counterMaxLength="10"
             app:errorEnabled="true"
             app:expandedHintEnabled="true"
-            app:hintTextColor="@color/nice_blue"
+            app:hintTextColor="@color/main_color"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.25"
-            app:startIconDrawable="@drawable/ic_baseline_person_outline_24">
+            app:startIconDrawable="@drawable/ic_person">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/loginEditText"
@@ -52,17 +52,17 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="16dp"
             android:hint="Пароль"
-            app:boxStrokeColor="@color/nice_blue"
+            app:boxStrokeColor="@color/main_color"
             app:counterEnabled="true"
             app:counterMaxLength="12"
             app:endIconMode="password_toggle"
             app:errorEnabled="true"
             app:expandedHintEnabled="true"
-            app:hintTextColor="@color/nice_blue"
+            app:hintTextColor="@color/main_color"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/loginInputLayout"
-            app:startIconDrawable="@drawable/ic_baseline_lock_24">
+            app:startIconDrawable="@drawable/ic_password">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/passwordEditText"
@@ -80,7 +80,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:backgroundTint="@color/nice_blue"
+            android:backgroundTint="@color/main_color"
             android:text="Войти"
             app:layout_constraintEnd_toEndOf="@+id/passwordInputLayout"
             app:layout_constraintStart_toStartOf="@+id/passwordInputLayout"

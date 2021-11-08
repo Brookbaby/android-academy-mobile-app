@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#A6A5A5">
+    android:background="#A6A5A5"
+    tools:ignore="HardcodedText,SpUsage,ContentDescription">
 
     <ImageView
         android:id="@+id/albumInfoimageView"
@@ -13,7 +14,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="65dp"
         android:layout_marginEnd="16dp"
-        android:background="#D6D6D6"
+        tools:background="#D6D6D6"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -27,6 +28,7 @@
         android:layout_marginTop="40dp"
         android:fontFamily="sans-serif-black"
         android:text="TextView"
+        android:textColor="@color/main_color"
         android:textSize="25dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/albumInfoimageView" />
@@ -35,9 +37,9 @@
         android:id="@+id/singerNameInfotextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="4dp"
         android:text="TextView"
-        android:textSize="16dp"
+        android:textSize="20dp"
         app:layout_constraintStart_toStartOf="@+id/trackNameInfotextView"
         app:layout_constraintTop_toBottomOf="@+id/trackNameInfotextView" />
 
@@ -46,18 +48,20 @@
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="20dp"
-        android:layout_marginTop="80dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginHorizontal="6dp"
+        android:progressTint="@color/main_color"
+        android:layout_marginTop="40dp"
+        android:thumbTint="@color/main_color"
+        app:layout_constraintEnd_toEndOf="@+id/albumInfoimageView"
+        app:layout_constraintStart_toStartOf="@+id/albumInfoimageView"
         app:layout_constraintTop_toBottomOf="@+id/singerNameInfotextView" />
 
     <ImageView
-        android:id="@+id/pauseImageView"
+        android:id="@+id/playImageView"
         android:layout_width="60dp"
         android:layout_height="80dp"
-        android:backgroundTint="@color/gray2"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:backgroundTint="@color/main_color"
+        android:layout_marginTop="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/trackProgressBar"
@@ -67,30 +71,30 @@
         android:id="@+id/rewindTrackImageView"
         android:layout_width="60dp"
         android:layout_height="80dp"
-        android:backgroundTint="@color/gray2"
-        app:layout_constraintBottom_toBottomOf="@+id/pauseImageView"
-        app:layout_constraintEnd_toStartOf="@+id/pauseImageView"
+        android:backgroundTint="@color/main_color"
+        app:layout_constraintBottom_toBottomOf="@+id/playImageView"
+        app:layout_constraintEnd_toStartOf="@+id/playImageView"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/pauseImageView"
-        app:srcCompat="@drawable/ic_baseline_fast_rewind_24" />
+        app:layout_constraintTop_toTopOf="@+id/playImageView"
+        app:srcCompat="@drawable/ic_rewind" />
 
     <ImageView
         android:id="@+id/forwardTrackImageView"
         android:layout_width="60dp"
         android:layout_height="80dp"
-        android:backgroundTint="@color/gray2"
-        app:layout_constraintBottom_toBottomOf="@+id/pauseImageView"
+        android:backgroundTint="@color/main_color"
+        app:layout_constraintBottom_toBottomOf="@+id/playImageView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/pauseImageView"
-        app:layout_constraintTop_toTopOf="@+id/pauseImageView"
-        app:srcCompat="@drawable/ic_baseline_fast_forward_24" />
+        app:layout_constraintStart_toEndOf="@+id/playImageView"
+        app:layout_constraintTop_toTopOf="@+id/playImageView"
+        app:srcCompat="@drawable/ic_forward" />
 
     <TextView
         android:id="@+id/zeroTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
         android:text="00:00"
-        android:layout_marginStart="8dp"
         android:textSize="15dp"
         app:layout_constraintStart_toStartOf="@+id/trackProgressBar"
         app:layout_constraintTop_toBottomOf="@+id/trackProgressBar" />
@@ -99,8 +103,8 @@
         android:id="@+id/endTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="0"
-        android:layout_marginEnd="8dp"
+        android:layout_marginEnd="12dp"
+        android:text="00:00"
         android:textSize="15dp"
         app:layout_constraintEnd_toEndOf="@+id/trackProgressBar"
         app:layout_constraintTop_toBottomOf="@+id/trackProgressBar" />

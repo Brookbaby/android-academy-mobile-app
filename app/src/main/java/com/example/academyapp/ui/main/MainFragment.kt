@@ -15,9 +15,8 @@ import com.example.academyapp.databinding.FragmentMainBinding
 import com.example.academyapp.domain.api.responses.TrackResponse
 import dagger.hilt.android.AndroidEntryPoint
 import android.widget.TextView
-
-
-
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.setupWithNavController
 
 @AndroidEntryPoint
 class MainFragment : Fragment() {
@@ -31,6 +30,8 @@ class MainFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentMainBinding.inflate(inflater, container, false)
+        val appBarConfig = AppBarConfiguration(findNavController().graph)
+        binding.toolbar.setupWithNavController(findNavController(), appBarConfig)
 
         lifecycleScope.launchWhenResumed {
             try {

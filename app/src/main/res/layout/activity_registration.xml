@@ -48,7 +48,7 @@
             android:button="@null"
             android:gravity="center"
             android:text="Регистрация"
-            android:textColor="@color/nice_blue" />
+            android:textColor="@color/main_color" />
     </RadioGroup>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
