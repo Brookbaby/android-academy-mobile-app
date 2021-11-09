@@ -23,7 +23,11 @@ class LoginFragment : Fragment() {
     var login = ""
     var password = ""
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         binding = FragmentLoginBinding.inflate(inflater, container, false)
         binding.lifecycleOwner = this
         binding.vm = vm
@@ -36,6 +40,7 @@ class LoginFragment : Fragment() {
             lifecycleScope.launchWhenResumed {
                 if (checkLogin() && checkPassword()) {
                     vm.repository.putSession(true)
+                    vm.repository.setLogin(login)
                     startActivity(Intent(requireActivity(), MainActivity::class.java))
                 }
             }

@@ -28,6 +28,13 @@ class Repository @Inject constructor(
 
     suspend fun getTracks(): TracksResponse {
         val tracks = musicService.getRecentTracks()
-       return tracks
+        return tracks
     }
+
+    suspend fun setLogin(login: String) {
+        sharedPrefs.edit().putString("login", login).apply()
+    }
+
+    suspend fun getLogin() = sharedPrefs.getString("login","")
+
 }
