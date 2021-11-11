@@ -57,4 +57,10 @@ class MainFragment : Fragment() {
         bundle.putParcelable("track",track)
         findNavController().navigate(R.id.action_mainFragment_to_trackInfoFragment,bundle)
     }
+
+    private fun addTrackToDb(track:TrackResponse){
+       lifecycleScope.launchWhenResumed {
+           vm.repository.addTrack(track)
+       }
+    }
 }
