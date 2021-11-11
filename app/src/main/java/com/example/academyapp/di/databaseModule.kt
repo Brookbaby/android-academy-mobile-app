@@ -33,4 +33,8 @@ object databaseModule {
     @Provides
     fun provideUserDao(db: DataBase) = db.getUserDao()
 
+    @Singleton
+    @Provides
+    fun provideTrackDao(db: DataBase) = db.getTrackDao()
+
 }

@@ -10,7 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.example.academyapp.RegistrationActivity
 import com.example.academyapp.databinding.FragmentRegistrationBinding
-import com.example.academyapp.domain.local.entity.User
+import com.example.academyapp.domain.local.entity.UserDto
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.async
@@ -74,10 +74,10 @@ class RegistrationFragment : Fragment() {
     }
 
     private suspend fun isUserExist(): Boolean {
-        val user: Deferred<User?> = lifecycleScope.async {
+        val userDto: Deferred<UserDto?> = lifecycleScope.async {
             vm.repository.getUser(login)
         }
-        return user.await() != null
+        return userDto.await() != null
     }
 
     private fun checkMail(): Boolean {

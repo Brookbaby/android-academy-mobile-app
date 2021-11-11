@@ -10,6 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.example.academyapp.MainActivity
 import com.example.academyapp.R
+import com.example.academyapp.RegistrationActivity
 import com.example.academyapp.databinding.FragmentProfileBinding
 import com.example.academyapp.databinding.FragmentTrackinfoBinding
 import com.example.academyapp.domain.Repository
@@ -43,7 +44,7 @@ class ProfileFragment : Fragment() {
         binding.logOutButton.setOnClickListener {
             lifecycleScope.launchWhenResumed {
                 vm.repository.putSession(false)
-                startActivity(Intent(requireActivity(), MainActivity::class.java))
+                startActivity(Intent(requireActivity(), RegistrationActivity::class.java))
             }
         }
 

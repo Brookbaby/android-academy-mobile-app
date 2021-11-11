@@ -24,7 +24,11 @@
         android:id="@+id/favoriteFragment"
         android:name="com.example.academyapp.ui.favorite.FavoriteFragment"
         android:label="FavoriteFragment"
-        tools:layout="@layout/fragment_favorite" />
+        tools:layout="@layout/fragment_favorite" >
+        <action
+            android:id="@+id/action_favoriteFragment_to_trackInfoFragment"
+            app:destination="@id/trackInfoFragment" />
+    </fragment>
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.example.academyapp.ui.profile.ProfileFragment"

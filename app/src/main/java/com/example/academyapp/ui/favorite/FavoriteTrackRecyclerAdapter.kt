@@ -1,25 +1,19 @@
-package com.example.academyapp.ui.main
+package com.example.academyapp.ui.favorite
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bumptech.glide.Glide
 import com.example.academyapp.R
 import com.example.academyapp.databinding.ItemTrackBinding
-import com.example.academyapp.domain.api.responses.AlbumResponse
-import com.example.academyapp.domain.api.responses.TrackResponse
-import kotlin.random.Random.Default.nextBoolean
-import retrofit2.Response
+import com.example.academyapp.domain.local.entity.TrackDto
 
-class MusicTrackRecyclerAdapter(
-    private val tracks: List<TrackResponse>,
-    var click: (TrackResponse) -> Unit,
-    var addTrackToDb: (TrackResponse) -> Unit
-) :
-    RecyclerView.Adapter<MusicTrackRecyclerAdapter.TrackViewHolder>() {
+class FavoriteTrackRecyclerAdapter(
+    private val tracks: List<TrackDto>,
+    val click: (TrackDto) -> Unit
+) : RecyclerView.Adapter<FavoriteTrackRecyclerAdapter.TrackViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TrackViewHolder {
         val itemView =
@@ -40,11 +34,11 @@ class MusicTrackRecyclerAdapter(
 
         private val binding by viewBinding(ItemTrackBinding::bind)
 
-        fun bind(track: TrackResponse) {
-            binding.nameTrackTextView.text = track.title
-            binding.singerTextView.text = track.artistResponse.name
+        fun bind(track: TrackDto) {
+            binding.nameTrackTextView.text = track.trackName
+            binding.singerTextView.text = track.singerName
             Glide.with(binding.root.context)
-                .load(track.albumResponse.cover)
+                .load(track.id)
                 .centerCrop()
                 .into(binding.albumImageView)
             binding.trackLayout.setOnClickListener {

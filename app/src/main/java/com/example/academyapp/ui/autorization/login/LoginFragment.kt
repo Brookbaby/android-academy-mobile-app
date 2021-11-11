@@ -10,7 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.example.academyapp.MainActivity
 import com.example.academyapp.databinding.FragmentLoginBinding
-import com.example.academyapp.domain.local.entity.User
+import com.example.academyapp.domain.local.entity.UserDto
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.async
@@ -72,10 +72,10 @@ class LoginFragment : Fragment() {
     }
 
     private suspend fun isUserNotExist(): Boolean {
-        val user: Deferred<User?> = lifecycleScope.async {
+        val userDto: Deferred<UserDto?> = lifecycleScope.async {
             vm.repository.getUser(login)
         }
-        return user.await() == null
+        return userDto.await() == null
     }
 
     private suspend fun checkPassword(): Boolean {
@@ -102,10 +102,10 @@ class LoginFragment : Fragment() {
     }
 
     private suspend fun isPasswordNotExist(): Boolean {
-        val user: Deferred<User?> = lifecycleScope.async {
+        val userDto: Deferred<UserDto?> = lifecycleScope.async {
             vm.repository.getUser(login)
         }
-        return user.await()?.password != password
+        return userDto.await()?.password != password
     }
 
     private suspend fun checkUserIsLogined() {

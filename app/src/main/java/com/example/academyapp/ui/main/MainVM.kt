@@ -8,7 +8,7 @@ import javax.inject.Inject
 @HiltViewModel
 class MainVM @Inject constructor(val repository:Repository):ViewModel(){
 
-    suspend fun getTracks() = repository.getTracks()
+    suspend fun getTracks() = repository.getTracksFromInternet()
 }
 
 
