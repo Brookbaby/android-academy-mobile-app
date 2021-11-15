@@ -3,20 +3,16 @@ package com.example.academyapp.ui.main
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bumptech.glide.Glide
 import com.example.academyapp.R
 import com.example.academyapp.databinding.ItemTrackBinding
-import com.example.academyapp.domain.api.responses.AlbumResponse
 import com.example.academyapp.domain.api.responses.TrackResponse
-import kotlin.random.Random.Default.nextBoolean
-import retrofit2.Response
 
 class MusicTrackRecyclerAdapter(
     private val tracks: List<TrackResponse>,
-    var click: (TrackResponse) -> Unit,
+    val openTrack: (TrackResponse) -> Unit,
     var addTrackToDb: (TrackResponse) -> Unit
 ) :
     RecyclerView.Adapter<MusicTrackRecyclerAdapter.TrackViewHolder>() {
@@ -48,7 +44,10 @@ class MusicTrackRecyclerAdapter(
                 .centerCrop()
                 .into(binding.albumImageView)
             binding.trackLayout.setOnClickListener {
-                click.invoke(track)
+                openTrack.invoke(track)
+            }
+            binding.downloadImageView.setOnClickListener {
+                addTrackToDb.invoke(track)
             }
         }
     }

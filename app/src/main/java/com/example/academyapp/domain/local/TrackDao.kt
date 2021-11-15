@@ -15,4 +15,7 @@ interface TrackDao {
 
     @Query("SELECT * FROM tracks_table")
     suspend fun getTracks(): List<TrackDto>
+
+    @Query("DELETE FROM tracks_table WHERE id = :trackId")
+    suspend fun deleteTrack(trackId: Int)
 }

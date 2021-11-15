@@ -27,7 +27,8 @@ object databaseModule {
         context,
         DataBase::class.java,
         "AlinaDataBase"
-    ).build()
+    ).fallbackToDestructiveMigration()
+        .build()
 
     @Singleton
     @Provides

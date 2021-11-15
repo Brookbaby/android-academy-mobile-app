@@ -37,12 +37,16 @@ class Repository @Inject constructor(
         userDao.addUser(user)
     }
 
-   suspend fun addTrack(track: TrackResponse){
-       trackDao.addTracks(track.toDomain())
-   }
+    suspend fun addTrack(track: TrackResponse) {
+        trackDao.addTracks(track.toDomain())
+    }
 
     suspend fun getTracksFromInternet() = musicService.getRecentTracks()
 
     suspend fun getTracksFromDataBase() = trackDao.getTracks()
+
+    suspend fun deleteTrack(trackId: Int) {
+        trackDao.deleteTrack(trackId)
+    }
 
 }

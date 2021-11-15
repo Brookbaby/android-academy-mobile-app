@@ -14,7 +14,6 @@ import com.example.academyapp.R
 import com.example.academyapp.databinding.FragmentMainBinding
 import com.example.academyapp.domain.api.responses.TrackResponse
 import dagger.hilt.android.AndroidEntryPoint
-import android.widget.TextView
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 
@@ -37,7 +36,7 @@ class MainFragment : Fragment() {
             try {
                 val items = vm.getTracks()
                 binding.tracksRecyclerView.adapter =
-                    MusicTrackRecyclerAdapter(items.trackResponses) {track -> clickOnTrack(track) }
+                    MusicTrackRecyclerAdapter(items.trackResponses,::clickOnTrack, ::addTrackToDb)
                 binding.tracksRecyclerView.isInvisible = false
                 binding.errorTextView.isVisible = false
                 binding.progressBar.isVisible = false
@@ -53,7 +52,7 @@ class MainFragment : Fragment() {
     }
 
     private fun clickOnTrack(track:TrackResponse) {
-        var bundle = Bundle()
+        val bundle = Bundle()
         bundle.putParcelable("track",track)
         findNavController().navigate(R.id.action_mainFragment_to_trackInfoFragment,bundle)
     }
