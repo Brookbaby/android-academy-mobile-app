@@ -1,4 +1,4 @@
-package com.example.academyapp.ui.favorite
+package com.example.academyapp.ui.downloads
 
 import android.view.LayoutInflater
 import android.view.View
@@ -11,10 +11,10 @@ import com.example.academyapp.R
 import com.example.academyapp.databinding.ItemTrackBinding
 import com.example.academyapp.domain.local.entity.TrackDto
 
-class FavoriteTrackRecyclerAdapter(
+class DownloadsTrackRecyclerAdapter(
     val click: (TrackDto) -> Unit,
     val delete: (TrackDto) -> Unit
-) : RecyclerView.Adapter<FavoriteTrackRecyclerAdapter.TrackTTViewHolder>() {
+) : RecyclerView.Adapter<DownloadsTrackRecyclerAdapter.TrackTTViewHolder>() {
 
     private val tracks: MutableList<TrackDto> = mutableListOf()
 

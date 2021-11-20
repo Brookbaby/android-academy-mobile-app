@@ -3,6 +3,8 @@ package com.example.academyapp.ui.main
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
+import androidx.core.view.isInvisible
 import androidx.recyclerview.widget.RecyclerView
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bumptech.glide.Glide
@@ -13,7 +15,8 @@ import com.example.academyapp.domain.api.responses.TrackResponse
 class MusicTrackRecyclerAdapter(
     private val tracks: List<TrackResponse>,
     val openTrack: (TrackResponse) -> Unit,
-    var addTrackToDb: (TrackResponse) -> Unit
+    val addTrackToDb: (TrackResponse) -> Unit,
+    val deleteTrack: (TrackResponse) -> Unit
 ) :
     RecyclerView.Adapter<MusicTrackRecyclerAdapter.TrackViewHolder>() {
 
@@ -46,7 +49,21 @@ class MusicTrackRecyclerAdapter(
             binding.trackLayout.setOnClickListener {
                 openTrack.invoke(track)
             }
+            var isFavoriteTrack = false
+            binding.notFavoriteImageView.setOnClickListener {
+                val favorite = binding.notFavoriteImageView
+                if (isFavoriteTrack == false) {
+                    favorite.setImageResource(R.drawable.ic_favorite_track)
+                    isFavoriteTrack = true
+                    addTrackToDb.invoke(track)
+                } else {
+                    favorite.setImageResource(R.drawable.ic_not_favorite)
+                    isFavoriteTrack = false
+                    deleteTrack.invoke(track)
+                }
+            }
             binding.downloadImageView.setOnClickListener {
+                binding.downloadImageView.isInvisible = true
                 addTrackToDb.invoke(track)
             }
         }

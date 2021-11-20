@@ -10,12 +10,12 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.setupWithNavController
 import com.example.academyapp.R
 import com.example.academyapp.databinding.FragmentMainBinding
 import com.example.academyapp.domain.api.responses.TrackResponse
 import dagger.hilt.android.AndroidEntryPoint
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.setupWithNavController
 
 @AndroidEntryPoint
 class MainFragment : Fragment() {
@@ -36,7 +36,7 @@ class MainFragment : Fragment() {
             try {
                 val items = vm.getTracks()
                 binding.tracksRecyclerView.adapter =
-                    MusicTrackRecyclerAdapter(items.trackResponses,::clickOnTrack, ::addTrackToDb)
+                    MusicTrackRecyclerAdapter(items.trackResponses, ::clickOnTrack, ::addTrackToDb, ::deleteTrack)
                 binding.tracksRecyclerView.isInvisible = false
                 binding.errorTextView.isVisible = false
                 binding.progressBar.isVisible = false
@@ -51,15 +51,21 @@ class MainFragment : Fragment() {
 
     }
 
-    private fun clickOnTrack(track:TrackResponse) {
+    private fun clickOnTrack(track: TrackResponse) {
         val bundle = Bundle()
-        bundle.putParcelable("track",track)
-        findNavController().navigate(R.id.action_mainFragment_to_trackInfoFragment,bundle)
+        bundle.putParcelable("track", track)
+        findNavController().navigate(R.id.action_mainFragment_to_trackInfoFragment, bundle)
     }
 
-    private fun addTrackToDb(track:TrackResponse){
-       lifecycleScope.launchWhenResumed {
-           vm.repository.addTrack(track)
-       }
+    private fun addTrackToDb(track: TrackResponse) {
+        lifecycleScope.launchWhenResumed {
+            vm.repository.addTrack(track)
+        }
+    }
+
+    private fun deleteTrack(track: TrackResponse) {
+        lifecycleScope.launchWhenResumed {
+            vm.repository.deleteTrack(track.title, track.artistResponse.name)
+        }
     }
 }
